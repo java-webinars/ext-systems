@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource
+            driverClassName="org.postgresql.Driver"
+            maxActive="4"
+            maxIdle="2"
+            maxWait="5000"
+            name="jdbc/cityRegister"
+            username="postgres"
+            password="postgres"
+            type="javax.sql.DataSource"
+            url="jdbc:postgresql://localhost/city_register"
+            validationQuery="SELECT 1">
+    </Resource>
+</Context>
