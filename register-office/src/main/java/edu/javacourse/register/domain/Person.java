@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,6 +23,14 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "sex", discriminatorType = DiscriminatorType.INTEGER)
+
+@NamedQueries({
+    @NamedQuery(name = "Person.findPersons",
+    query = "SELECT p FROM Person p " +
+            "LEFT JOIN FETCH p.passports ps " +
+            "LEFT JOIN FETCH p.birthCertificate bs " +
+            "WHERE p.personId = :personId")
+})
 public class Person
 {
     @Id
