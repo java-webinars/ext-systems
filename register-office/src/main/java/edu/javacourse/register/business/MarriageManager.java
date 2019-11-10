@@ -4,6 +4,7 @@ import edu.javacourse.register.dao.MarriageDao;
 import edu.javacourse.register.dao.PersonDao;
 import edu.javacourse.register.domain.MarriageCertificate;
 import edu.javacourse.register.domain.Person;
+import edu.javacourse.register.domain.PersonFemale;
 import edu.javacourse.register.domain.PersonMale;
 import edu.javacourse.register.view.MarriageRequest;
 import edu.javacourse.register.view.MarriageResponse;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service("marriageService")
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -31,22 +33,42 @@ public class MarriageManager
     @Transactional
     public MarriageResponse findMarriageCertificate(MarriageRequest request) {
         LOGGER.info("findMarriageCertificate called");
-        MarriageCertificate cert = marriageDao.findMarriageCertificate(request);
 
-        personDao.findPersons();
+        personDao.addPerson(getPerson(1));
+        personDao.addPerson(getPerson(2));
 
-        personDao.addPerson(getPerson());
-        personDao.addPerson(getPerson());
-        personDao.addPerson(getPerson());
+        MarriageCertificate mc = getMarriageCertificate();
+        marriageDao.saveAndFlush(mc);
+
+//        marriageDao.findAll();
+        marriageDao.findById(1L);
 
         return new MarriageResponse();
     }
 
-    private Person getPerson() {
-        Person m = new PersonMale();
-        m.setFirstName("1");
-        m.setLastName("2");
-        m.setPatronymic("3");
+    private MarriageCertificate getMarriageCertificate() {
+        MarriageCertificate mc = new MarriageCertificate();
+        mc.setIssueDate(LocalDate.now());
+        mc.setNumber("12345");
+        mc.setActive(true);
+
+        List<Person> persons = personDao.findPersons();
+        for(Person person : persons) {
+            if (person instanceof PersonMale) {
+                mc.setHusband((PersonMale)person);
+            } else {
+                mc.setWife((PersonFemale)person);
+            }
+        }
+
+        return mc;
+    }
+
+    private Person getPerson(int sex) {
+        Person m = sex == 1 ? new PersonMale() : new PersonFemale();
+        m.setFirstName("1_" + sex);
+        m.setLastName("2_" + sex);
+        m.setPatronymic("3_" + sex);
         m.setDateOfBirth(LocalDate.of(1991, 3, 12));
         return m;
     }
