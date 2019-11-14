@@ -9,11 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Table(name = "ro_marriage_certificate")
 @Entity
+@NamedQuery(name = "MarriageCertificate.findByNum",
+        query = "SELECT mc FROM MarriageCertificate mc WHERE mc.number = :number")
 public class MarriageCertificate
 {
     @Id
