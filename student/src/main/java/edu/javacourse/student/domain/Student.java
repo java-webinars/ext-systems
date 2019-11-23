@@ -30,7 +30,7 @@ public class Student
     private LocalDate dateOfBirth;
     @Column(name = "passport_seria")
     private String passportSeria;
-    @Column(name = "passport_mnumber")
+    @Column(name = "passport_number")
     private String passportNumber;
     @Column(name = "passport_date")
     private LocalDate passportDate;
