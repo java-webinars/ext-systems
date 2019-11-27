@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +23,11 @@ public class StudentService
     @Autowired
     private StudentRepository studentRepository;
 
+    @Transactional
     public List<StudentResponse> getStudentInfo(StudentRequest request) {
         List<Student> student = studentRepository.findStudent(request.getLastName(),
                 request.getFirstName(),
-                request.getModdleName(),
+                request.getMiddleName(),
                 request.getDateOfBirth(),
                 request.getPassportSeria(),
                 request.getPassportNumber(),
