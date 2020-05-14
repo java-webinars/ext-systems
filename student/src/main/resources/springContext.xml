@@ -19,7 +19,7 @@
                       entity-manager-factory-ref="emf"
                       transaction-manager-ref="txManager"/>
 
-    <tx:annotation-driven transaction-manager="txManager" />
+    <tx:annotation-driven transaction-manager="txManager"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.postgresql.Driver"/>
@@ -48,7 +48,14 @@
     </bean>
 
     <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="emf" />
+        <property name="entityManagerFactory" ref="emf"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
 
 </beans>
