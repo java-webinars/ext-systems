@@ -6,9 +6,11 @@ import edu.javacourse.student.view.StudentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +32,11 @@ public class StudentController
     @GetMapping(path = "/check")
     public String checkAdmin() {
         return "Rest Service is working";
+    }
+
+    @GetMapping(path = "/params/{checkId}")
+    public String checkParams(@PathVariable("checkId") Long checkId,
+                              @RequestParam("comment") String comment) {
+        return checkId + ":" + comment;
     }
 }
